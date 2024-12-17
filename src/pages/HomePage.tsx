@@ -14,7 +14,7 @@ export default function HomePage() {
     "models": "bom_access_global"
   }
   useEffect(() => {
-    fetch('/api/data') // Call your server's endpoint
+    fetch('/api/weatherdata') // Call your server's endpoint
   .then((response) => response.json())
   .then(data => console.log(data))
   .catch((error) => console.error('Error:', error));
