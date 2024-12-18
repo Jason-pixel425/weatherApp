@@ -53,7 +53,7 @@ app.get('/api/getData', async(req, res) => {
 // Fetch weather data using weatherapi
 // app.get('/api/weatherdata', async(req, res) => {
 //     try {
-//         const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=-27.7397,153.138&aqi=no`)
+//         const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=&aqi=no`)
 //         const data = await response.json();
 //         res.json(data)
 //     } catch(err) {
