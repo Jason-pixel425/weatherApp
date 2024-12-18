@@ -1,24 +1,35 @@
 import { useState, useEffect } from 'react'
-import { fetchWeatherApi } from 'openmeteo'
 
 
 // IPGEO
-// open-metro
+// WeatherAPI
 // "lat":-27.7397,"lon":153.138
 export default function HomePage() {
+  const [geoLocation, setGeolocation] = useState(null)
   const [weatherData, setData] = useState(null)
-  // const [count, setCount] = useState(0)
-  const params = {
-    "latitude": -27.7397,
-    "longitude": 153.138,
-    "models": "bom_access_global"
-  }
-  useEffect(() => {
-    fetch('/api/weatherdata') // Call your server's endpoint
-  .then((response) => response.json())
-  .then(data => console.log(data))
-  .catch((error) => console.error('Error:', error));
-  }, [])
+  
+  // This function does **NOT** ask for permission from user.
+  // Remember to implement asking user for permission to geolocate.
+  // Also handle if permission is not granted.
+  // useEffect(() => {
+  //   fetch('/api/geolocate')
+  //   .then(resp => resp.json())
+  //   .then(data => {
+  //     setGeolocation({
+  //       lat: data.lat,
+  //       lon: data.lon
+  //     })
+  //   })
+  // }, [])
+  // geoLocation ? console.log(geoLocation) : null
+
+
+  // useEffect(() => {
+  //   fetch('/api/weatherdata') // Call your server's endpoint
+  // .then((response) => response.json())
+  // .then(data => console.log(data))
+  // .catch((error) => console.error('Error:', error));
+  // }, [])
 
 
   return (
