@@ -11,30 +11,56 @@ const PORT = 3001;
 const API_KEY = process.env.API_Key;
 
 
-// Fetch geolocation using IPGEO
-app.get('/api/geolocate', async(req, res) => {
+// Initialze cache 
+//  data lives for 15 mins
+const cache = new NodeCache({ stdTTL: 900 })
+
+
+// Fetch data
+app.get('/api/getData', async(req, res) => {
+    const cacheKey = 'combinedData'
+    
+
+    // Returned cached data if exists
+    if (cache.has(cacheKey)) {
+        console.log('returning cached combined data')
+        return res.json(cache.get(cacheKey))
+    }
+
+    // Fetch data if not cached
     try {
-        const response = await fetch('https://api.techniknews.net/ipgeo')
-        const data = await response.json()
-        res.json(data)
+        const geoResponse = await fetch('https://api.techniknews.net/ipgeo')
+        const geoData = await geoResponse.json()
+
+        const weatherResponse = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${geoData.lat},${geoData.lon}&days=3&aqi=no`)
+        const weatherData = await weatherResponse.json();
+
+        const combinedData = {
+            geolocation: weatherData.location,
+            weatherCurrent: weatherData.current,
+            weatherForecast: weatherData.forecast
+        }
+
+        // cache data before returning
+        cache.set(cacheKey, combinedData)
+        res.json(combinedData)
     } catch(error){
-        res.status(500).json({error: 'Error geolocating'})
+        res.status(500).json({error: 'Error'})
     }
 })
 
 // Fetch weather data using weatherapi
-app.get('/api/weatherdata', async(req, res) => {
-    try {
-        const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=-27.7397,153.138&aqi=no`)
-        const data = await response.json();
-        res.json(data)
-    } catch(err) {
-        res.status(500).json({error: 'Server error'})
-        console.log(err)
-    }
-})
+// app.get('/api/weatherdata', async(req, res) => {
+//     try {
+//         const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=-27.7397,153.138&aqi=no`)
+//         const data = await response.json();
+//         res.json(data)
+//     } catch(err) {
+//         res.status(500).json({error: 'Server error'})
+//         console.log(err)
+//     }
+// })
 
-// app.get('/api/combinedData', async(req, res))
 
 // app.get('/api/data', async (req, res) => {
 //     try {
