@@ -25,7 +25,7 @@ export default function HomePage() {
   console.log(weatherCurrent)
   console.log(weatherForecast)
 
-
+ 
 
   return (
     <>

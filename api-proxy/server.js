@@ -43,6 +43,7 @@ app.get('/api/getData', async(req, res) => {
 
         // cache data before returning
         cache.set(cacheKey, combinedData)
+        console.log("returning new Data")
         res.json(combinedData)
     } catch(error){
         res.status(500).json({error: 'Error'})
