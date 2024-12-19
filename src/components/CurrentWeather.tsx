@@ -1,4 +1,6 @@
 
-export default function CurrentWeather({children, ...rest}) {
-    return children
+export default function CurrentWeather({}) {
+    return (
+        <></>
+    )
 }

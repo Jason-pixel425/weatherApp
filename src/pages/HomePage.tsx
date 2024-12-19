@@ -1,7 +1,6 @@
 import { useState, useEffect, createContext } from 'react'
 import CurrentWeather from '../components/CurrentWeather'
-import PermissionCheck from '../components/permissionsCheck';
-import { FcInfo } from "react-icons/fc";
+
 
 // IPGEO
 // WeatherAPI
@@ -20,8 +19,8 @@ export default function HomePage() {
     .then(resp => resp.json())
     .then(data => {
       setGeolocation(data.geolocation)
-      setWeatherCurrent(data.weatherCurrent)
-      setWeatherForecast(data.weatherForecast)
+      setWeatherCurrent({weatherCur : {...data.weatherCurrent}, weatherCurrForecast :{...data.weatherForecast.forecastday[0]}})
+      setWeatherForecast(data.weatherForecast.forecastday.slice(1))
       setLoading(false)
     })
     

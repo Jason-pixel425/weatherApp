@@ -32,11 +32,14 @@ app.get('/api/getData', async(req, res) => {
         const geoResponse = await fetch('https://api.techniknews.net/ipgeo')
         const geoData = await geoResponse.json()
 
-        const weatherResponse = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${geoData.lat},${geoData.lon}&days=3&aqi=no`)
+        const weatherResponse = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${geoData.lat},${geoData.lon}&days=4&aqi=no`)
         const weatherData = await weatherResponse.json();
 
+        // This is needed as the weather current does not include astro data for the current day.
+        // const weatherAstroResponse = await fetch('https//api.weather.com/v1')
+        console.log(weatherData)
         const combinedData = {
-            geolocation: weatherData.location,
+            geolocation: weatherData.location, 
             weatherCurrent: weatherData.current,
             weatherForecast: weatherData.forecast
         }

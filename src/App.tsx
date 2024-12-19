@@ -1,4 +1,4 @@
- import { useState, useEffect } from 'react'
+ import { useState } from 'react'
  import { BrowserRouter, Routes, Route } from 'react-router'
 // import { fetchWeatherApi } from 'openmeteo'
 import PermissionCheck from './components/permissionsCheck.tsx'
