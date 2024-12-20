@@ -1,0 +1,14 @@
+.current-weather-container{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr, 1fr;
+}
+.location{
+    grid-row: span 2;
+}
+
+.current{
+    grid-row: 1 / span 2;
+    grid-column-start: 3;
+
+}

@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import { WeatherContext } from '../pages/HomePage'
 import WeatherCard from './WeatherCard'
+import styles from '../styles/currentWeather.module.css'
 
 export default function CurrentWeather({}) {
     const { weatherCurrentData, geolocationData } = useContext(WeatherContext)
@@ -8,11 +9,11 @@ export default function CurrentWeather({}) {
     const weatherDataDay = weatherCurrentData.weatherCurrForecast
     return (
         <>
-        <section className="current-weather-container">
-            <h2>{geolocationData.name}, {geolocationData.region}, {geolocationData.country}</h2>
+        <section className={styles["current-weather-container"]}>
+            <h2 className={styles["location"]}>{geolocationData.name}, {geolocationData.region}, {geolocationData.country}</h2>
             <WeatherCard valueName="Heat index" value={`${weatherDataCurrent.heatindex_c}°C`} />
             <WeatherCard valueName="UV Index" value={weatherDataCurrent.uv} />
-            <div>
+            <div className={styles["current"]}>
                 <h3>Current Weather</h3>
                 <p>{weatherDataCurrent.temp_c}°C</p>
             </div>
