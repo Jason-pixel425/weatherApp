@@ -10,18 +10,18 @@ export default function HomePage() {
   const [geolocation, setGeolocation] = useState({})
   const [weatherCurrent, setWeatherCurrent] = useState(null)
   const [weatherForecast, setWeatherForecast] = useState(null)
-  const [loading, setLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   
 
   useEffect(() => {
-    setLoading(true)
+    setIsLoading(true)
     fetch('/api/getData')
     .then(resp => resp.json())
     .then(data => {
       setGeolocation(data.geolocation)
       setWeatherCurrent({weatherCur : {...data.weatherCurrent}, weatherCurrForecast :{...data.weatherForecast.forecastday[0]}})
       setWeatherForecast(data.weatherForecast.forecastday.slice(1))
-      setLoading(false)
+      setIsLoading(false)
     })
     
   }, [])
@@ -39,7 +39,7 @@ export default function HomePage() {
           weatherCurrentData : weatherCurrent, 
           weatherForecastData : weatherForecast
         }}>
-
+          {!isLoading && <CurrentWeather />}
         </WeatherContext.Provider>
 
         {/* {weatherCurrent &&
@@ -50,3 +50,5 @@ export default function HomePage() {
     </>
   )
 }
+
+export { WeatherContext }
