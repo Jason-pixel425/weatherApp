@@ -8,8 +8,7 @@ import './App.css'
 // IPGEO
 
 function App() {
-  // const [count, setCount] = useState(0)
-  const [isPermissionGranted, setIsPermissionGranted] = useState(null)
+  const [isPermissionGranted, setIsPermissionGranted] = useState(true)
 
   function togglePermissionGranted(toggleBool) {
     setIsPermissionGranted(toggleBool)

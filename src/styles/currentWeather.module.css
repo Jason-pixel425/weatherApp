@@ -1,14 +1,41 @@
 .current-weather-container{
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 1fr, 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1em;
+    /* grid-template-rows: 1fr, 1fr; */
 }
-.location{
-    grid-row: span 2;
+.current-weather{
+    border: 1px solid white;
+    border-radius: 8px;
+    padding: 1em;
+    grid-column: span 2;
 }
+
+.current-weather > h2 {
+    font-size: 1.5rem;
+    text-underline-offset: 0.3em;
+    margin: 0;
+    font-weight: 500;
+}
+
+.horizontal-line{
+    height: 3px; /* Line thickness */
+    background-color: #FFF; /* Line color */
+    width: 100%; /* Line width */
+    margin: 5px 0; /* Space around the line */
+  }
+
 
 .current{
-    grid-row: 1 / span 2;
-    grid-column-start: 3;
+    
+    grid-column: span 2;
 
 }
+
+.inline{
+    display: flex;
+    font-size: 1.4rem;
+    width: 50%;
+    font-weight: bold;
+}
+
