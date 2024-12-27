@@ -11,6 +11,15 @@ export default function CurrentWeather({}) {
     const weatherDataCurrent = weatherCurrentData.weatherCur
     const weatherDataDay = weatherCurrentData.weatherCurrForecast
 
+    function getBackgroundImg() {
+        // str.toLowerCase().includes(substr)
+         const weatherConditionString = weatherDataCurrent.condition.text.toLowerCase()
+        console.log(weatherConditionString)
+    }
+    // useEffect(() => {
+    //     document.body.style.backgroundImage
+    // }, [])
+        getBackgroundImg()
 
     return (
         <>
