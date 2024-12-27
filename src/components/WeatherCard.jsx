@@ -11,8 +11,11 @@ export default function WeatherCard({
         <div className={styles[`weather-card`]} style={style}>
             <p>{valueName}</p>
             {valueImg && <img src={valueImg} alt={valueName} />}
-            <p>{value}</p>
-            {children}
+            <div className={styles['value-container']}>
+                <p>{value}</p>
+                {children}
+
+            </div>
         </div>
     )
 }

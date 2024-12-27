@@ -1,41 +1,70 @@
 .current-weather-container{
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     gap: 1em;
-    /* grid-template-rows: 1fr, 1fr; */
+    max-width: 1280px;
+    padding: 4rem;
+    backdrop-filter: blur(25px);
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 0 50px 50px 50px;
+    
 }
-.current-weather{
-    border: 1px solid white;
-    border-radius: 8px;
-    padding: 1em;
-    grid-column: span 2;
-}
+body{
+    background-image: url('images/sunnyDay (2).jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
 
-.current-weather > h2 {
-    font-size: 1.5rem;
-    text-underline-offset: 0.3em;
-    margin: 0;
-    font-weight: 500;
 }
-
 .horizontal-line{
     height: 3px; /* Line thickness */
     background-color: #FFF; /* Line color */
     width: 100%; /* Line width */
-    margin: 5px 0; /* Space around the line */
+    margin: 1em 0; /* Space around the line */
   }
 
+.location-time{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+   border-left: 1px solid white;
+   padding-left: 1em;
+    margin: 0;
+}
 
-.current{
-    
-    grid-column: span 2;
+.weather-details-title{
+    margin: 1em auto;
+    font-weight: 500;
+}
 
+.current-temperature{
+    font-size: 7rem;
+    margin: 0;
 }
 
 .inline{
     display: flex;
-    font-size: 1.4rem;
-    width: 50%;
-    font-weight: bold;
+    width: fit-content;
+    border-radius: 50px 50px 0 0;
+    gap: 1em;
+    padding: 2em 2em 0 2em;
+    font-size: 1.5rem;
+    font-weight: 500;
+    align-items: center;
+    backdrop-filter: blur(25px);
+    background-color: rgba(0, 0, 0, 0.6);
+    /* border-radius: 50px 50px 0px 0px; */
 }
 
+.location-time > h2 {
+    font-weight: 500;
+}
+
+.inline > p, .location-time > p, .location-time > h2 {
+    margin: 0;
+}
+
+.weather-day-information-container{
+    width: 75%;
+    /* temp centering */
+    margin: 0 auto;
+}

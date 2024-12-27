@@ -1,7 +1,6 @@
 import { useState, useEffect, createContext } from 'react'
 import CurrentWeather from '../components/CurrentWeather'
 
-
 // IPGEO
 // WeatherAPI
 const WeatherContext = createContext(null);
@@ -29,24 +28,20 @@ export default function HomePage() {
   console.log(weatherCurrent)
   console.log(weatherForecast)
 
- 
-
   return (
     <>
-        
+          {isLoading ? (
+        <div>Loading...</div>
+      ) : (
         <WeatherContext.Provider value={{
           geolocationData : geolocation, 
           weatherCurrentData : weatherCurrent, 
           weatherForecastData : weatherForecast
         }}>
-          {!isLoading && <CurrentWeather />}
+          <CurrentWeather />
         </WeatherContext.Provider>
+        )}
 
-        {/* {weatherCurrent &&
-          <CurrentWeather>
-              <p>{weatherCurrent.feelslike_c}</p>
-          </CurrentWeather>
-        } */}
     </>
   )
 }
