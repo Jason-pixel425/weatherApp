@@ -4,6 +4,11 @@ import WeatherCard from './WeatherCard'
 import styles from '../styles/currentWeather.module.css'
 import WeatherCurrentForecast from './WeatherCurrentForecast'
 import Clock from './Clock'
+import Lightning from '../styles/images/Lightning.jpg';
+import Cloudy from '../styles/images/Cloudy.jpg';
+import Rain from '../styles/images/Rain.jpg';
+import Night from '../styles/images/night.jpg';
+import SunnyDay from '../styles/images/sunnyDay.jpg';
 
 export default function CurrentWeather({}) {
     const [backgroundImg, setBackgroundImg] = useState(null)
@@ -12,14 +17,35 @@ export default function CurrentWeather({}) {
     const weatherDataDay = weatherCurrentData.weatherCurrForecast
 
     function getBackgroundImg() {
-        // str.toLowerCase().includes(substr)
+
          const weatherConditionString = weatherDataCurrent.condition.text.toLowerCase()
         console.log(weatherConditionString)
+        setBackgroundImg(() => {
+        if (weatherConditionString.includes('thunderstorm')){
+            return Lightning
+        }
+        if (weatherConditionString.includes("cloudy")){
+            return Cloudy
+        }
+        if(weatherConditionString.includes("rain")){
+            return Rain
+        }
+        if(weatherConditionString.includes('clear')){
+            return Night
+        } else {
+            return SunnyDay
+        }
+        })
     }
-    // useEffect(() => {
-    //     document.body.style.backgroundImage
-    // }, [])
-        getBackgroundImg()
+
+    useEffect(() => {
+        getBackgroundImg();
+        if (backgroundImg) {
+            console.log('Updated background image:', backgroundImg);
+            document.getElementById('body').style.backgroundImage = `url(${backgroundImg})`;
+        }
+    }, [backgroundImg]);
+        
 
     return (
         <>
@@ -42,7 +68,7 @@ export default function CurrentWeather({}) {
             <div className={styles["weather-day-information-container"]}>
                 <WeatherCard valueName="Chance of Rain" value={`${weatherDataDay.day.daily_chance_of_rain}%`} >
                     <svg width="18" height="24" viewBox="0 0 18 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M16 16.3638C16 19.1811 13.1867 22 9 22C4.81327 22 2 19.1811 2 16.3638C2 13.4416 3.9006 9.8024 6.13452 6.6343C7.1442 5.20239 8.15754 3.95509 8.94997 3.03368C9.75748 4.02709 10.8053 5.37938 11.8493 6.90552C12.9378 8.49674 13.9966 10.2398 14.7767 11.9363C15.5711 13.6638 16 15.1806 16 16.3638ZM0 16.3638C0 10.927 5.13123 4.37097 7.64477 1.48563C8.4601 0.549704 9 0 9 0C9 0 9.51723 0.571768 10.3037 1.52955C12.7979 4.56699 18 11.4867 18 16.3638C18 20.5812 13.9706 24 9 24C4.02944 24 0 20.5812 0 16.3638ZM4.49834 13H6.64991C6.24509 13.9239 6 14.8001 6 15.5455C6 16.6901 7.11963 18 9 18V20C6.23858 20 4 18.0057 4 15.5455C4 14.7246 4.191 13.86 4.49834 13Z" fill="white"/>
+                        <path fillRule="evenodd" clipRule="evenodd" d="M16 16.3638C16 19.1811 13.1867 22 9 22C4.81327 22 2 19.1811 2 16.3638C2 13.4416 3.9006 9.8024 6.13452 6.6343C7.1442 5.20239 8.15754 3.95509 8.94997 3.03368C9.75748 4.02709 10.8053 5.37938 11.8493 6.90552C12.9378 8.49674 13.9966 10.2398 14.7767 11.9363C15.5711 13.6638 16 15.1806 16 16.3638ZM0 16.3638C0 10.927 5.13123 4.37097 7.64477 1.48563C8.4601 0.549704 9 0 9 0C9 0 9.51723 0.571768 10.3037 1.52955C12.7979 4.56699 18 11.4867 18 16.3638C18 20.5812 13.9706 24 9 24C4.02944 24 0 20.5812 0 16.3638ZM4.49834 13H6.64991C6.24509 13.9239 6 14.8001 6 15.5455C6 16.6901 7.11963 18 9 18V20C6.23858 20 4 18.0057 4 15.5455C4 14.7246 4.191 13.86 4.49834 13Z" fill="white"/>
                     </svg>
                 </WeatherCard>
                 <WeatherCard valueName="Heat index" value={`${weatherDataCurrent.heatindex_c}°C`} >
@@ -61,29 +87,29 @@ export default function CurrentWeather({}) {
                     </svg>
                 </WeatherCard>
                 <WeatherCard valueName="Humidity" value={`${weatherDataCurrent.humidity}%`}>
-                <svg fill="#000000" height="48px" width="30" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 328.611 328.611" xml:space="preserve" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M209.306,50.798c-2.452-3.337-7.147-4.055-10.485-1.602c-3.338,2.453-4.055,7.147-1.603,10.485 c54.576,74.266,66.032,123.541,66.032,151.8c0,27.691-8.272,52.794-23.293,70.685c-17.519,20.866-42.972,31.446-75.651,31.446 c-73.031,0-98.944-55.018-98.944-102.131c0-52.227,28.103-103.234,51.679-136.829c25.858-36.847,52.11-61.415,52.37-61.657 c3.035-2.819,3.209-7.565,0.39-10.6c-2.819-3.034-7.565-3.209-10.599-0.39c-1.11,1.031-27.497,25.698-54.254,63.765 c-24.901,35.428-54.586,89.465-54.586,145.71c0,31.062,9.673,59.599,27.236,80.353c20.361,24.061,50.345,36.779,86.708,36.779 c36.794,0,66.926-12.726,87.139-36.801c17.286-20.588,26.806-49.117,26.806-80.33C278.25,156.216,240.758,93.597,209.306,50.798z" fill="white"></path> 
+                <svg fill="#000000" height="48px" width="30" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 328.611 328.611" xmlSpace="preserve" stroke="#000000"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M209.306,50.798c-2.452-3.337-7.147-4.055-10.485-1.602c-3.338,2.453-4.055,7.147-1.603,10.485 c54.576,74.266,66.032,123.541,66.032,151.8c0,27.691-8.272,52.794-23.293,70.685c-17.519,20.866-42.972,31.446-75.651,31.446 c-73.031,0-98.944-55.018-98.944-102.131c0-52.227,28.103-103.234,51.679-136.829c25.858-36.847,52.11-61.415,52.37-61.657 c3.035-2.819,3.209-7.565,0.39-10.6c-2.819-3.034-7.565-3.209-10.599-0.39c-1.11,1.031-27.497,25.698-54.254,63.765 c-24.901,35.428-54.586,89.465-54.586,145.71c0,31.062,9.673,59.599,27.236,80.353c20.361,24.061,50.345,36.779,86.708,36.779 c36.794,0,66.926-12.726,87.139-36.801c17.286-20.588,26.806-49.117,26.806-80.33C278.25,156.216,240.758,93.597,209.306,50.798z" fill="white"></path> 
                     <path d="M198.43,148.146l-95.162,95.162c-2.929,2.929-2.929,7.678,0,10.606c1.465,1.464,3.385,2.197,5.304,2.197 s3.839-0.732,5.304-2.197l95.162-95.162c2.929-2.929,2.929-7.678,0-10.606C206.107,145.217,201.359,145.217,198.43,148.146z" fill="white"></path> 
                     <path d="M191.965,207.899c-13.292,0-24.106,10.814-24.106,24.106s10.814,24.106,24.106,24.106s24.106-10.814,24.106-24.106 S205.257,207.899,191.965,207.899z M191.965,241.111c-5.021,0-9.106-4.085-9.106-9.106s4.085-9.106,9.106-9.106 s9.106,4.085,9.106,9.106S196.986,241.111,191.965,241.111z" fill="white"></path> 
                     <path d="M125.178,194.162c13.292,0,24.106-10.814,24.106-24.106s-10.814-24.106-24.106-24.106s-24.106,10.814-24.106,24.106 S111.886,194.162,125.178,194.162z M125.178,160.949c5.021,0,9.106,4.085,9.106,9.106s-4.085,9.106-9.106,9.106 c-5.021,0-9.106-4.085-9.106-9.106S120.156,160.949,125.178,160.949z" fill="white"></path> </g> </g></svg>
                 </WeatherCard>
                 <WeatherCard valueName="Cloud Coverage" value={`${weatherDataCurrent.cloud}%`}>
                     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M7.48923 4.75824C7.76737 4.72918 8.04955 4.71429 8.33508 4.71429C12.1542 4.71429 15.3734 7.37767 16.3594 11.0109C16.4383 11.0058 16.5177 11.0024 16.5975 11.0009C16.5651 11.0004 16.5326 11.0001 16.5 11.0001L16.4736 11.0001L16.4736 11H17.6785H17.7259V10.9996C19.2228 10.9743 20.4285 9.75298 20.4285 8.25C20.4285 6.73122 19.1973 5.5 17.6785 5.5C17.1686 5.5 16.6911 5.6388 16.2817 5.88068C16.2805 5.44168 16.2138 5.01807 16.0909 4.6191C15.4787 2.84544 13.7945 1.57143 11.8128 1.57143C9.77966 1.57143 8.05971 2.91245 7.48923 4.75824ZM19.7816 12.026C21.1248 13.0239 22 14.656 22 16.5C22 19.5375 19.6253 22 16.6959 22C16.6303 22 16.565 21.9987 16.5 21.9963V22H8.45988V21.9991C8.41836 21.9997 8.37675 22 8.33508 22C3.73174 22 0 18.1305 0 13.3571C0 9.50269 2.4333 6.23755 5.79395 5.1233C6.25971 2.21891 8.77714 0 11.8128 0C14.4174 0 16.6404 1.63337 17.5135 3.93167C17.5682 3.92961 17.6233 3.92857 17.6785 3.92857C20.0652 3.92857 22 5.86334 22 8.25C22 9.87321 21.105 11.2874 19.7816 12.026ZM16.5 20.4286H8.45988H8.36945V20.4285L8.33508 20.4286C4.65284 20.4286 1.57143 17.3168 1.57143 13.3571C1.57143 9.39751 4.65284 6.28571 8.33508 6.28571C11.4587 6.28571 14.15 8.52503 14.8947 11.6216L14.897 11.6206C15.0022 12.0503 15.0693 12.4957 15.0942 12.9529C15.5838 12.7075 16.1285 12.5714 16.6959 12.5714C18.7042 12.5714 20.4286 14.2761 20.4286 16.5C20.4286 18.7083 18.7282 20.4046 16.738 20.4283V20.4286H16.5Z" fill="white"/>
+                        <path fillRule="evenodd" clipRule="evenodd" d="M7.48923 4.75824C7.76737 4.72918 8.04955 4.71429 8.33508 4.71429C12.1542 4.71429 15.3734 7.37767 16.3594 11.0109C16.4383 11.0058 16.5177 11.0024 16.5975 11.0009C16.5651 11.0004 16.5326 11.0001 16.5 11.0001L16.4736 11.0001L16.4736 11H17.6785H17.7259V10.9996C19.2228 10.9743 20.4285 9.75298 20.4285 8.25C20.4285 6.73122 19.1973 5.5 17.6785 5.5C17.1686 5.5 16.6911 5.6388 16.2817 5.88068C16.2805 5.44168 16.2138 5.01807 16.0909 4.6191C15.4787 2.84544 13.7945 1.57143 11.8128 1.57143C9.77966 1.57143 8.05971 2.91245 7.48923 4.75824ZM19.7816 12.026C21.1248 13.0239 22 14.656 22 16.5C22 19.5375 19.6253 22 16.6959 22C16.6303 22 16.565 21.9987 16.5 21.9963V22H8.45988V21.9991C8.41836 21.9997 8.37675 22 8.33508 22C3.73174 22 0 18.1305 0 13.3571C0 9.50269 2.4333 6.23755 5.79395 5.1233C6.25971 2.21891 8.77714 0 11.8128 0C14.4174 0 16.6404 1.63337 17.5135 3.93167C17.5682 3.92961 17.6233 3.92857 17.6785 3.92857C20.0652 3.92857 22 5.86334 22 8.25C22 9.87321 21.105 11.2874 19.7816 12.026ZM16.5 20.4286H8.45988H8.36945V20.4285L8.33508 20.4286C4.65284 20.4286 1.57143 17.3168 1.57143 13.3571C1.57143 9.39751 4.65284 6.28571 8.33508 6.28571C11.4587 6.28571 14.15 8.52503 14.8947 11.6216L14.897 11.6206C15.0022 12.0503 15.0693 12.4957 15.0942 12.9529C15.5838 12.7075 16.1285 12.5714 16.6959 12.5714C18.7042 12.5714 20.4286 14.2761 20.4286 16.5C20.4286 18.7083 18.7282 20.4046 16.738 20.4283V20.4286H16.5Z" fill="white"/>
                     </svg>
                 </WeatherCard>
                     
                 <WeatherCard valueName="UV Index" value={weatherDataCurrent.uv} >
                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="11" cy="11" r="5" fill="white" />
-                    <path d="M11 0 L11 3" stroke="white" stroke-width="2" stroke-linecap="round" />
-                    <path d="M11 19 L11 22" stroke="white" stroke-width="2" stroke-linecap="round" />
-                    <path d="M0 11 L3 11" stroke="white" stroke-width="2" stroke-linecap="round" />
-                    <path d="M19 11 L22 11" stroke="white" stroke-width="2" stroke-linecap="round" />
-                    <path d="M3.5 3.5 L5.5 5.5" stroke="white" stroke-width="2" stroke-linecap="round" />
-                    <path d="M16.5 16.5 L18.5 18.5" stroke="white" stroke-width="2" stroke-linecap="round" />
-                    <path d="M3.5 18.5 L5.5 16.5" stroke="white" stroke-width="2" stroke-linecap="round" />
-                    <path d="M16.5 5.5 L18.5 3.5" stroke="white" stroke-width="2" stroke-linecap="round" />
-                    <text x="50%" y="50%" fill="white" font-size="4" font-family="Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="middle">UV</text>
+                    <path d="M11 0 L11 3" stroke="white" strokeWidth="2" strokeLinecap="round" />
+                    <path d="M11 19 L11 22" stroke="white" strokeWidth="2" strokeLinecap="round" />
+                    <path d="M0 11 L3 11" stroke="white" strokeWidth="2" strokeLinecap="round" />
+                    <path d="M19 11 L22 11" stroke="white" strokeWidth="2" strokeLinecap="round" />
+                    <path d="M3.5 3.5 L5.5 5.5" stroke="white" strokeWidth="2" strokeLinecap="round" />
+                    <path d="M16.5 16.5 L18.5 18.5" stroke="white" strokeWidth="2" strokeLinecap="round" />
+                    <path d="M3.5 18.5 L5.5 16.5" stroke="white" strokeWidth="2" strokeLinecap="round" />
+                    <path d="M16.5 5.5 L18.5 3.5" stroke="white" strokeWidth="2" strokeLinecap="round" />
+                    <text x="50%" y="50%" fill="white" fontSize="4" fontFamily="Arial, sans-serif" fontWeight="bold" textAnchor="middle" dominantBaseline="middle">UV</text>
                     </svg>
                 </WeatherCard>
             </div>
