@@ -63,7 +63,7 @@ export default function CurrentWeather({}) {
             <WeatherCurrentForecast forecastDay={weatherDataDay} />
             
             <h3 className={styles['weather-details-title']}>Weather Details...</h3>
-
+            <p>{weatherDataCurrent.condition.text}</p>
 
             <div className={styles["weather-day-information-container"]}>
                 <WeatherCard valueName="Chance of Rain" value={`${weatherDataDay.day.daily_chance_of_rain}%`} >
