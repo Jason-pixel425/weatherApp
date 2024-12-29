@@ -21,7 +21,7 @@ export default function CurrentWeather({}) {
          const weatherConditionString = weatherDataCurrent.condition.text.toLowerCase()
         console.log(weatherConditionString)
         setBackgroundImg(() => {
-        if (weatherConditionString.includes('thunderstorm')){
+        if (weatherConditionString.includes('thunder')){
             return Lightning
         }
         if (weatherConditionString.includes("cloudy")){
@@ -56,14 +56,17 @@ export default function CurrentWeather({}) {
                     <Clock />
                 </div>
                 <img src={weatherDataCurrent.condition.icon} alt={weatherCurrentData.condition} />
+                
             </div>
-        <section className={styles["current-weather-container"]}>
-
-
-            <WeatherCurrentForecast forecastDay={weatherDataDay} />
             
-            <h3 className={styles['weather-details-title']}>Weather Details...</h3>
-            <p>{weatherDataCurrent.condition.text}</p>
+        <section className={styles["current-weather-container"]}>
+            
+            <WeatherCurrentForecast forecastDay={weatherDataDay} />
+
+            <div>
+                <h3 className={styles['weather-details-title']}>Weather Details...</h3>
+                <p className={styles['weather-detail-condition-text']}>{weatherDataCurrent.condition.text}</p>
+            </div>
 
             <div className={styles["weather-day-information-container"]}>
                 <WeatherCard valueName="Chance of Rain" value={`${weatherDataDay.day.daily_chance_of_rain}%`} >
