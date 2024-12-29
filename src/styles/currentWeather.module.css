@@ -1,0 +1,70 @@
+.current-weather-container{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1em;
+    max-width: 1280px;
+    padding: 4rem;
+    backdrop-filter: blur(25px);
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 0 50px 50px 50px;
+    
+}
+body{
+    
+    background-size: cover;
+    background-repeat: no-repeat;
+
+}
+.horizontal-line{
+    height: 3px; /* Line thickness */
+    background-color: #FFF; /* Line color */
+    width: 100%; /* Line width */
+    margin: 1em 0; /* Space around the line */
+  }
+
+.location-time{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+   border-left: 1px solid white;
+   padding-left: 1em;
+    margin: 0;
+}
+
+.weather-details-title{
+    margin: 1em auto;
+    font-weight: 500;
+}
+
+.current-temperature{
+    font-size: 7rem;
+    margin: 0;
+}
+
+.inline{
+    display: flex;
+    width: fit-content;
+    border-radius: 50px 50px 0 0;
+    gap: 1em;
+    padding: 2em 2em 0 2em;
+    font-size: 1.5rem;
+    font-weight: 500;
+    align-items: center;
+    backdrop-filter: blur(25px);
+    background-color: rgba(0, 0, 0, 0.6);
+    /* border-radius: 50px 50px 0px 0px; */
+}
+
+.location-time > h2 {
+    font-weight: 500;
+}
+
+.inline > p, .location-time > p, .location-time > h2 {
+    margin: 0;
+}
+
+.weather-day-information-container{
+    width: 75%;
+    /* temp centering */
+    margin: 0 auto;
+}

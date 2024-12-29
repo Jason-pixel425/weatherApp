@@ -1,0 +1,15 @@
+div.weather-card {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5em;
+    border-bottom: 1px solid grey;
+    min-width: 125px;
+}
+
+.value-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80px;
+    gap: 0.7em;
+}
