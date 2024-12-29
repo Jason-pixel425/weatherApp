@@ -9,6 +9,7 @@ div.weather-card {
 .value-container{
     display: flex;
     align-items: center;
+    text-align: center;
     justify-content: space-between;
     width: 80px;
     gap: 0.7em;

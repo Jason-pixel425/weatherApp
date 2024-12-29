@@ -4,15 +4,20 @@
 
 body{
   width: 100%;
-  padding: 2rem;
   justify-content: center;
   align-items: center;
   /* background: #141E30; 
   background: -webkit-linear-gradient(to , #243B55, #141E30); 
   background: linear-gradient(to bottom, #243B55, #141E30);  */
-
 }
-#root {
 
-  
+#root {
+  width: 100%;
+  justify-content: space-between;
+}
+
+@media (min-width: 1200px){
+  #root {
+    display: flex;
+  }
 }

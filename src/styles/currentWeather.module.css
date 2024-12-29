@@ -4,8 +4,8 @@
     gap: 1em;
     max-width: 1280px;
     padding: 4rem;
-    backdrop-filter: blur(25px);
-    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+    background-color: rgba(0, 0, 0, 0.7);
     border-radius: 0 50px 50px 50px;
     
 }
@@ -32,10 +32,18 @@ body{
 }
 
 .weather-details-title{
-    margin: 1em auto;
+    text-align: center;
+    
+    padding: 0;
     font-weight: 500;
 }
-
+.weather-detail-condition-text{
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+}
 .current-temperature{
     font-size: 7rem;
     margin: 0;
@@ -44,15 +52,38 @@ body{
 .inline{
     display: flex;
     width: fit-content;
+    height: fit-content;
+    margin: 2em 2em 0 0em;
     border-radius: 50px 50px 0 0;
-    gap: 1em;
     padding: 2em 2em 0 2em;
     font-size: 1.5rem;
     font-weight: 500;
     align-items: center;
-    backdrop-filter: blur(25px);
-    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.9);
     /* border-radius: 50px 50px 0px 0px; */
+}
+
+.weather-day-information-container{
+    width: 80%;
+    /* temp centering */
+    margin: 0 auto;
+}
+@media (min-width: 1200px){
+    .inline{
+        height: fit-content;
+        align-self: center;
+        margin: 2em 2em 2em 5%;        
+        padding: 2em;
+        border-radius: 50px;
+    }
+    .current-weather-container{
+        height: 100vh;
+        border-radius: 0;
+    }
+    .weather-day-information-container{
+    width: 90%;
+    }
 }
 
 .location-time > h2 {
@@ -61,10 +92,4 @@ body{
 
 .inline > p, .location-time > p, .location-time > h2 {
     margin: 0;
-}
-
-.weather-day-information-container{
-    width: 75%;
-    /* temp centering */
-    margin: 0 auto;
 }
