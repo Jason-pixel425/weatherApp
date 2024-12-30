@@ -8,7 +8,7 @@ dotenv.config()
 const app = express();
 const PORT = 3001;
 
-const API_KEY = process.env.API_Key;
+const WEATHERAPI_API_KEY = process.env.WEATHERAPI_API_Key;
 
 
 // Initialze cache 
@@ -32,7 +32,7 @@ app.get('/api/getData', async(req, res) => {
         const geoResponse = await fetch('https://api.techniknews.net/ipgeo')
         const geoData = await geoResponse.json()
 
-        const weatherResponse = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${geoData.lat},${geoData.lon}&days=4&aqi=no`)
+        const weatherResponse = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${WEATHERAPI_API_KEY}&q=${geoData.lat},${geoData.lon}&days=4&aqi=no`)
         const weatherData = await weatherResponse.json();
 
         // This is needed as the weather current does not include astro data for the current day.
