@@ -10,6 +10,7 @@ import Cloudy from '../styles/images/Cloudy.jpg';
 import Rain from '../styles/images/Rain.jpg';
 import Night from '../styles/images/night.jpg';
 import SunnyDay from '../styles/images/sunnyDay.jpg';
+import partlyCloudy from '../styles/images/partlycloudy.jpg'
 
 export default function CurrentWeather({}) {
     const [backgroundImg, setBackgroundImg] = useState(null)
@@ -24,6 +25,9 @@ export default function CurrentWeather({}) {
         setBackgroundImg(() => {
         if (weatherConditionString.includes('thunder')){
             return Lightning
+        }
+        if (weatherConditionString.includes('partly cloudy')){
+            return partlyCloudy
         }
         if (weatherConditionString.includes("cloudy")){
             return Cloudy
