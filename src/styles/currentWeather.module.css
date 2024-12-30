@@ -20,7 +20,7 @@ body{
     background-color: #FFF; /* Line color */
     width: 100%; /* Line width */
     margin: 1em 0; /* Space around the line */
-  }
+}
 
 .location-time{
     display: flex;
@@ -78,7 +78,7 @@ body{
         border-radius: 50px;
     }
     .current-weather-container{
-        height: 100vh;
+        min-height: 100vh;
         border-radius: 0;
     }
     .weather-day-information-container{

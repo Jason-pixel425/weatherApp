@@ -4,25 +4,30 @@ import WeatherCard from './WeatherCard'
 import styles from '../styles/currentWeather.module.css'
 import WeatherCurrentForecast from './WeatherCurrentForecast'
 import Clock from './Clock'
+import ForecastWeather from './ForecastWeather'
 import Lightning from '../styles/images/Lightning.jpg';
 import Cloudy from '../styles/images/Cloudy.jpg';
 import Rain from '../styles/images/Rain.jpg';
 import Night from '../styles/images/night.jpg';
 import SunnyDay from '../styles/images/sunnyDay.jpg';
+import partlyCloudy from '../styles/images/partlycloudy.jpg'
 
 export default function CurrentWeather({}) {
     const [backgroundImg, setBackgroundImg] = useState(null)
-    const { weatherCurrentData, geolocationData } = useContext(WeatherContext)
+    const { weatherCurrentData, geolocationData, weatherForecastData } = useContext(WeatherContext)
     const weatherDataCurrent = weatherCurrentData.weatherCur
     const weatherDataDay = weatherCurrentData.weatherCurrForecast
 
     function getBackgroundImg() {
 
-         const weatherConditionString = weatherDataCurrent.condition.text.toLowerCase()
+        const weatherConditionString = weatherDataCurrent.condition.text.toLowerCase()
         console.log(weatherConditionString)
         setBackgroundImg(() => {
         if (weatherConditionString.includes('thunder')){
             return Lightning
+        }
+        if (weatherConditionString.includes('partly cloudy')){
+            return partlyCloudy
         }
         if (weatherConditionString.includes("cloudy")){
             return Cloudy
@@ -117,6 +122,7 @@ export default function CurrentWeather({}) {
                 </WeatherCard>
             </div>
                 <div className={styles["horizontal-line"]}></div>
+                <ForecastWeather forecastData = {weatherForecastData} />
         </section>
         </>
     )
