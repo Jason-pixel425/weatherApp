@@ -9,7 +9,7 @@ const app = express();
 const PORT = 3001;
 
 const WEATHERAPI_API_KEY = process.env.WEATHERAPI_API_Key;
-
+const GEOAPIFY_API_KEY = process.env.GEOAPIFY_API_KEY;
 
 // Initialze cache 
 //  data lives for 15 mins
@@ -46,7 +46,7 @@ app.get('/api/getData', async(req, res) => {
 
         // cache data before returning
         cache.set(cacheKey, combinedData)
-        console.log("returning new Data")
+        // console.log("returning new Data")
         res.json(combinedData)
     } catch(error){
         res.status(500).json({error: 'Error'})

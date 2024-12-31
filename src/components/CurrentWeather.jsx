@@ -4,6 +4,7 @@ import WeatherCard from './WeatherCard'
 import styles from '../styles/currentWeather.module.css'
 import WeatherCurrentForecast from './WeatherCurrentForecast'
 import Clock from './Clock'
+import SearchBar from './Searchbar'
 import ForecastWeather from './ForecastWeather'
 import Lightning from '../styles/images/Lightning.jpg';
 import Cloudy from '../styles/images/Cloudy.jpg';
@@ -65,9 +66,13 @@ export default function CurrentWeather({}) {
             </div>
             
         <section className={styles["current-weather-container"]}>
-            
             <WeatherCurrentForecast forecastDay={weatherDataDay} />
 
+            <div className={styles["search-bar-container"]}>
+                    <SearchBar />
+                    <div>SearchResults</div>
+             </div>
+             
             <div>
                 <h3 className={styles['weather-details-title']}>Weather Details...</h3>
                 <p className={styles['weather-detail-condition-text']}>{weatherDataCurrent.condition.text}</p>
