@@ -53,6 +53,56 @@ app.get('/api/getData', async(req, res) => {
     }
 })
 
+// search 
+
+app.get('/api/search', async (req, res) => {
+    const { query } = req.query;
+
+    if (!query || query.length <= 3) {
+        return res.status(400).json({ error: 'Query must be at least 4 characters long.' });
+    }
+    try {
+        const response = await fetch(`https://api.geoapify.com/v1/geocode/autocomplete?text=${query}&apiKey=${GEOAPIFY_API_KEY}`);
+        const data = await response.json();
+        res.json(data.features || []);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch geolocation data.' });
+    }
+});
+
+// Attempt at searching weather
+
+app.get('/api/searchweather', async (req, res) => {
+    const { lat, lon } = req.query;
+    const cacheKey = `searchData_${lat}_${lon}`;
+
+    // Returned cached data if exists
+    if (cache.has(cacheKey)) {
+        console.log('returning cached combined data')
+        return res.json(cache.get(cacheKey))
+    }
+
+    try {
+        const weatherResponse = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${WEATHERAPI_API_KEY}&q=${lat},${lon}&days=4&aqi=no`)
+        const weatherData = await weatherResponse.json();
+
+        // This is needed as the weather current does not include astro data for the current day.
+        // const weatherAstroResponse = await fetch('https//api.weather.com/v1')
+        console.log(weatherData)
+        const combinedData = {
+            geolocation: weatherData.location, 
+            weatherCurrent: weatherData.current,
+            weatherForecast: weatherData.forecast
+        }
+
+        // cache data before returning
+        cache.set(cacheKey, combinedData)
+        // console.log("returning new Data")
+        res.json(combinedData)
+    } catch(error){
+        res.status(500).json({error: 'Error'})
+    }
+})
 // Fetch weather data using weatherapi
 // app.get('/api/weatherdata', async(req, res) => {
 //     try {

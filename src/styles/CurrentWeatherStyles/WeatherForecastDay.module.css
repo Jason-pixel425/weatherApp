@@ -1,6 +1,5 @@
 .forecast-day-container{
     display: flex;
     overflow-x: scroll;
-    
     gap: 1em;
 }

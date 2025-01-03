@@ -3,33 +3,59 @@ import { FaSearch } from 'react-icons/fa';
 import styles from '../styles/SearchBarStyles/SearchBar.module.css';
 import _ from 'lodash';
 
-export default function SearchBar() {
+export default function SearchBar({handleSearch}) {
     const [input, setInput] = useState("");
+    const [searchData, setSearchData] = useState([])
+    // Use useMemo to create a persistent debounce
+    const fetchData = useMemo(
+        () =>
+            _.debounce(async (query) => {
+                try {
+                    const response = await fetch(`/api/search?query=${query}`);
+                    if (!response.ok) throw new Error('Failed to fetch data');
+                    const data = await response.json();
+                    console.log(data)
+                    setSearchData(data)
+                } catch (error) {
+                    console.error('Error fetching search results:', error);
+                }
+            }, 300), // Wait 300ms after typing stops
+        []
+    );
 
-    // Use useMemo to create a persistent debounced function
-    const fetchData = useMemo(() =>
-        _.debounce((value) => {
-            fetch(`https://api.geoapify.com/v1/geocode/autocomplete?text=${value}&apiKey=`)
-                .then(resp => resp.json())
-                .then(data => console.log(data))
-                .catch(err => console.error("API Error:", err));
-        }, 1000), []); // Empty dependency array ensures it's created once
-
+    // Cancel any pending debounced calls
     useEffect(() => {
-            return () => {
-                fetchData.cancel(); // Cancel any pending debounced calls
-            };
+        return () => {
+            fetchData.cancel(); 
+        };
     }, [fetchData]);
+
     const handleChange = (value) => {
         setInput(value)
         if (value.length > 3){
             fetchData(value)
         }
     }
+
     return (
-        <div className={styles["input-wrapper"]}>
-            <FaSearch className={styles["search-icon"]} />
-            <input placeholder="Type to search..." value={input} onChange={(e) => handleChange(e.target.value)} />
-        </div>
+        <section className={styles["search_section"]}>
+            <div className={styles["search_input_div"]}>
+                <input className={styles["search_input"]} placeholder="Type to search..." value={input} onChange={(e) => handleChange(e.target.value)} />
+            
+                <div className={styles['search_icon']}>
+                    <FaSearch  />
+                </div>
+            </div>
+            <div className={styles['search_result']}>
+                {
+                searchData?.map(result => {
+                    return <p className={styles["search_suggestion_line"]} onClick={() => handleSearch(result.properties.lat, result.properties.lon)}>
+                        {result.properties.formatted}
+                    </p>
+                    })
+                }
+
+            </div>
+        </section>
     )
 }
