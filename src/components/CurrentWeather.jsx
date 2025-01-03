@@ -4,6 +4,7 @@ import WeatherCard from './WeatherCard'
 import styles from '../styles/currentWeather.module.css'
 import WeatherCurrentForecast from './WeatherCurrentForecast'
 import Clock from './Clock'
+import SearchBar from './Searchbar'
 import ForecastWeather from './ForecastWeather'
 import Lightning from '../styles/images/Lightning.jpg';
 import Cloudy from '../styles/images/Cloudy.jpg';
@@ -14,42 +15,44 @@ import partlyCloudy from '../styles/images/partlycloudy.jpg'
 
 export default function CurrentWeather({}) {
     const [backgroundImg, setBackgroundImg] = useState(null)
-    const { weatherCurrentData, geolocationData, weatherForecastData } = useContext(WeatherContext)
+    const { weatherCurrentData, geolocationData, weatherForecastData, handleSearch } = useContext(WeatherContext)
     const weatherDataCurrent = weatherCurrentData.weatherCur
     const weatherDataDay = weatherCurrentData.weatherCurrForecast
 
-    function getBackgroundImg() {
+    useEffect(() => {
+        if (!weatherCurrentData?.weatherCur) return;
 
-        const weatherConditionString = weatherDataCurrent.condition.text.toLowerCase()
-        console.log(weatherConditionString)
-        setBackgroundImg(() => {
-        if (weatherConditionString.includes('thunder')){
-            return Lightning
-        }
-        if (weatherConditionString.includes('partly cloudy')){
-            return partlyCloudy
-        }
-        if (weatherConditionString.includes("cloudy")){
-            return Cloudy
-        }
-        if(weatherConditionString.includes("rain")){
-            return Rain
-        }
-        if(weatherConditionString.includes('clear')){
-            return Night
+        const weatherConditionString = weatherCurrentData.weatherCur.condition.text.toLowerCase();
+        console.log('Weather condition string:', weatherConditionString);
+
+        let newBackgroundImg;
+
+        if (weatherConditionString.includes('thunder')) {
+            newBackgroundImg = Lightning;
+        } else if (weatherConditionString.includes('partly cloudy')) {
+            newBackgroundImg = partlyCloudy;
+        } else if (weatherConditionString.includes('cloudy') || weatherConditionString.includes('overcast')) {
+            newBackgroundImg = Cloudy;
+        } else if (weatherConditionString.includes('rain')) {
+            newBackgroundImg = Rain;
+        } else if (weatherConditionString.includes('clear')) {
+            newBackgroundImg = Night;
         } else {
-            return SunnyDay
+            newBackgroundImg = SunnyDay;
         }
-        })
-    }
+
+        console.log('Setting new background image:', newBackgroundImg);
+        setBackgroundImg(newBackgroundImg);
+    }, [weatherCurrentData]);
 
     useEffect(() => {
-        getBackgroundImg();
         if (backgroundImg) {
-            console.log('Updated background image:', backgroundImg);
-            document.getElementById('body').style.backgroundImage = `url(${backgroundImg})`;
+            document.body.style.backgroundImage = `url(${backgroundImg})`;
+            console.log('Background image applied:', backgroundImg);
         }
     }, [backgroundImg]);
+
+
         
 
     return (
@@ -65,8 +68,14 @@ export default function CurrentWeather({}) {
             </div>
             
         <section className={styles["current-weather-container"]}>
-            
             <WeatherCurrentForecast forecastDay={weatherDataDay} />
+
+            
+                    <SearchBar handleSearch={handleSearch} />
+
+                           
+                  
+           
 
             <div>
                 <h3 className={styles['weather-details-title']}>Weather Details...</h3>

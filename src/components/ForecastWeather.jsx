@@ -27,7 +27,7 @@ export default function ForecastWeather({forecastData}){
 
     return (
         <>
-        <h3 className="three-day-forecast-title">Three-day forecast...</h3>
+        <h3 className="three-day-forecast-title">Two-day forecast...</h3>
         <div className="forecast-outer-container">
             {forcastDaysArr}
         </div>
