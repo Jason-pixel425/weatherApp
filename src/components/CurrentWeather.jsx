@@ -15,6 +15,7 @@ import partlyCloudy from '../styles/images/partlycloudy.jpg'
 
 export default function CurrentWeather({}) {
     const [backgroundImg, setBackgroundImg] = useState(null)
+    const [hasSearched, setHasSearched] = useState(false)
     const { weatherCurrentData, geolocationData, weatherForecastData, handleSearch } = useContext(WeatherContext)
     const weatherDataCurrent = weatherCurrentData.weatherCur
     const weatherDataDay = weatherCurrentData.weatherCurrForecast
@@ -23,8 +24,7 @@ export default function CurrentWeather({}) {
         if (!weatherCurrentData?.weatherCur) return;
 
         const weatherConditionString = weatherCurrentData.weatherCur.condition.text.toLowerCase();
-        console.log('Weather condition string:', weatherConditionString);
-
+      
         let newBackgroundImg;
 
         if (weatherConditionString.includes('thunder')) {
@@ -41,19 +41,16 @@ export default function CurrentWeather({}) {
             newBackgroundImg = SunnyDay;
         }
 
-        console.log('Setting new background image:', newBackgroundImg);
+    
         setBackgroundImg(newBackgroundImg);
     }, [weatherCurrentData]);
 
     useEffect(() => {
         if (backgroundImg) {
             document.body.style.backgroundImage = `url(${backgroundImg})`;
-            console.log('Background image applied:', backgroundImg);
+          
         }
     }, [backgroundImg]);
-
-
-        
 
     return (
         <>
@@ -70,12 +67,7 @@ export default function CurrentWeather({}) {
         <section className={styles["current-weather-container"]}>
             <WeatherCurrentForecast forecastDay={weatherDataDay} />
 
-            
-                    <SearchBar handleSearch={handleSearch} />
-
-                           
-                  
-           
+            <SearchBar handleSearch={handleSearch} />
 
             <div>
                 <h3 className={styles['weather-details-title']}>Weather Details...</h3>

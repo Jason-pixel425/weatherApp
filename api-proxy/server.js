@@ -37,7 +37,7 @@ app.get('/api/getData', async(req, res) => {
 
         // This is needed as the weather current does not include astro data for the current day.
         // const weatherAstroResponse = await fetch('https//api.weather.com/v1')
-        console.log(weatherData)
+       
         const combinedData = {
             geolocation: weatherData.location, 
             weatherCurrent: weatherData.current,
@@ -88,7 +88,7 @@ app.get('/api/searchweather', async (req, res) => {
 
         // This is needed as the weather current does not include astro data for the current day.
         // const weatherAstroResponse = await fetch('https//api.weather.com/v1')
-        console.log(weatherData)
+       
         const combinedData = {
             geolocation: weatherData.location, 
             weatherCurrent: weatherData.current,
@@ -103,25 +103,5 @@ app.get('/api/searchweather', async (req, res) => {
         res.status(500).json({error: 'Error'})
     }
 })
-// Fetch weather data using weatherapi
-// app.get('/api/weatherdata', async(req, res) => {
-//     try {
-//         const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=&aqi=no`)
-//         const data = await response.json();
-//         res.json(data)
-//     } catch(err) {
-//         res.status(500).json({error: 'Server error'})
-//         console.log(err)
-//     }
-// })
-
-
-// app.get('/api/data', async (req, res) => {
-//     try {
-//       res.json({ message: "API data response works!" }); // Test response
-//     } catch (error) {
-//       res.status(500).json({ error: 'Failed to fetch data' });
-//     }
-//   });
 
 app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`))

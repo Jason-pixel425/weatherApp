@@ -14,7 +14,7 @@ export default function SearchBar({handleSearch}) {
                     const response = await fetch(`/api/search?query=${query}`);
                     if (!response.ok) throw new Error('Failed to fetch data');
                     const data = await response.json();
-                    console.log(data)
+                   
                     setSearchData(data)
                 } catch (error) {
                     console.error('Error fetching search results:', error);

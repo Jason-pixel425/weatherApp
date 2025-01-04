@@ -1,9 +1,10 @@
 import PermissionCheck from "../components/permissionsCheck"
 import { FcInfo } from "react-icons/fc";
 import {Outlet} from 'react-router'
+import SearchBar from "../components/Searchbar";
 
 export default function PermissionPage({togglePermission, isPermissionGranted}) {
-    if (!isPermissionGranted){
+    if (isPermissionGranted === null){
         return (
         <PermissionCheck toggle={togglePermission}>
         <h1>Atmos</h1>
@@ -23,6 +24,6 @@ export default function PermissionPage({togglePermission, isPermissionGranted}) 
             </div>
         </PermissionCheck>
         )
-    } else return <Outlet />
+    }   else return <Outlet />
     
 }

@@ -11,4 +11,4 @@ export default function PermissionCheck({children, className, toggle, ...rest}){
         </section>
         </>
     )
-}
+}5
