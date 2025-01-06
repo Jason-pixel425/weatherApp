@@ -28,38 +28,6 @@ if (!WEATHERAPI_API_KEY || !GEOAPIFY_API_KEY) {
 const cache = new NodeCache({ stdTTL: 900 });
 
 
-
-app.get('/api/getData', async (req, res) => {
-    const cacheKey = 'combinedData';
-
-    if (cache.has(cacheKey)) {
-        console.log('Returning cached data');
-        return res.json(cache.get(cacheKey));
-    }
-
-    try {
-        const geoResponse = await fetch('https://api.techniknews.net/ipgeo');
-        const geoData = await geoResponse.json();
-
-        const weatherResponse = await fetch(
-            `https://api.weatherapi.com/v1/forecast.json?key=${WEATHERAPI_API_KEY}&q=${geoData.lat},${geoData.lon}&days=4&aqi=no`
-        );
-        const weatherData = await weatherResponse.json();
-
-        const combinedData = {
-            geolocation: weatherData.location,
-            weatherCurrent: weatherData.current,
-            weatherForecast: weatherData.forecast,
-        };
-
-        cache.set(cacheKey, combinedData);
-        res.json(combinedData);
-    } catch (error) {
-        res.status(500).json({ error: 'Error fetching data' });
-    }
-});
-
-
 app.get('/api/searchweather', async (req, res) => {
     const { lat, lon } = req.query;
     const cacheKey = `searchData_${lat}_${lon}`;
