@@ -1,107 +1,101 @@
 import express from 'express';
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
-import NodeCache from 'node-cache'
+import NodeCache from 'node-cache';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-dotenv.config()
+dotenv.config();
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
-const WEATHERAPI_API_KEY = process.env.WEATHERAPI_API_Key;
+// Ensure consistent environment variable usage
+const WEATHERAPI_API_KEY = process.env.WEATHERAPI_API_KEY;
 const GEOAPIFY_API_KEY = process.env.GEOAPIFY_API_KEY;
 
-// Initialze cache 
-//  data lives for 15 mins
-const cache = new NodeCache({ stdTTL: 900 })
+// Ensure the API keys are defined
+if (!WEATHERAPI_API_KEY || !GEOAPIFY_API_KEY) {
+    console.error('API keys are missing in the .env file');
+    process.exit(1);
+}
+
+// Cache setup (15 mins)
+const cache = new NodeCache({ stdTTL: 900 });
+
+// Path setup for static file serving
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve React build files for production
+app.use(express.static(path.join(__dirname, 'dist')));
 
 
-// Fetch data
-app.get('/api/getData', async(req, res) => {
-    const cacheKey = 'combinedData'
-    
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 
-    // Returned cached data if exists
+
+app.get('/api/getData', async (req, res) => {
+    const cacheKey = 'combinedData';
+
     if (cache.has(cacheKey)) {
-        console.log('returning cached combined data')
-        return res.json(cache.get(cacheKey))
+        console.log('Returning cached data');
+        return res.json(cache.get(cacheKey));
     }
 
-    // Fetch data if not cached
     try {
-        const geoResponse = await fetch('https://api.techniknews.net/ipgeo')
-        const geoData = await geoResponse.json()
+        const geoResponse = await fetch('https://api.techniknews.net/ipgeo');
+        const geoData = await geoResponse.json();
 
-        const weatherResponse = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${WEATHERAPI_API_KEY}&q=${geoData.lat},${geoData.lon}&days=4&aqi=no`)
+        const weatherResponse = await fetch(
+            `https://api.weatherapi.com/v1/forecast.json?key=${WEATHERAPI_API_KEY}&q=${geoData.lat},${geoData.lon}&days=4&aqi=no`
+        );
         const weatherData = await weatherResponse.json();
 
-        // This is needed as the weather current does not include astro data for the current day.
-        // const weatherAstroResponse = await fetch('https//api.weather.com/v1')
-       
         const combinedData = {
-            geolocation: weatherData.location, 
+            geolocation: weatherData.location,
             weatherCurrent: weatherData.current,
-            weatherForecast: weatherData.forecast
-        }
+            weatherForecast: weatherData.forecast,
+        };
 
-        // cache data before returning
-        cache.set(cacheKey, combinedData)
-        // console.log("returning new Data")
-        res.json(combinedData)
-    } catch(error){
-        res.status(500).json({error: 'Error'})
-    }
-})
-
-// search 
-
-app.get('/api/search', async (req, res) => {
-    const { query } = req.query;
-
-    if (!query || query.length <= 3) {
-        return res.status(400).json({ error: 'Query must be at least 4 characters long.' });
-    }
-    try {
-        const response = await fetch(`https://api.geoapify.com/v1/geocode/autocomplete?text=${query}&apiKey=${GEOAPIFY_API_KEY}`);
-        const data = await response.json();
-        res.json(data.features || []);
+        cache.set(cacheKey, combinedData);
+        res.json(combinedData);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch geolocation data.' });
+        res.status(500).json({ error: 'Error fetching data' });
     }
 });
 
-// Attempt at searching weather
 
 app.get('/api/searchweather', async (req, res) => {
     const { lat, lon } = req.query;
     const cacheKey = `searchData_${lat}_${lon}`;
 
-    // Returned cached data if exists
     if (cache.has(cacheKey)) {
-        console.log('returning cached combined data')
-        return res.json(cache.get(cacheKey))
+        console.log('Returning cached search data');
+        return res.json(cache.get(cacheKey));
     }
 
     try {
-        const weatherResponse = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${WEATHERAPI_API_KEY}&q=${lat},${lon}&days=4&aqi=no`)
+        const weatherResponse = await fetch(
+            `https://api.weatherapi.com/v1/forecast.json?key=${WEATHERAPI_API_KEY}&q=${lat},${lon}&days=4&aqi=no`
+        );
         const weatherData = await weatherResponse.json();
 
-        // This is needed as the weather current does not include astro data for the current day.
-        // const weatherAstroResponse = await fetch('https//api.weather.com/v1')
-       
         const combinedData = {
-            geolocation: weatherData.location, 
+            geolocation: weatherData.location,
             weatherCurrent: weatherData.current,
-            weatherForecast: weatherData.forecast
-        }
+            weatherForecast: weatherData.forecast,
+        };
 
-        // cache data before returning
-        cache.set(cacheKey, combinedData)
-        // console.log("returning new Data")
-        res.json(combinedData)
-    } catch(error){
-        res.status(500).json({error: 'Error'})
+        cache.set(cacheKey, combinedData);
+        res.json(combinedData);
+    } catch (error) {
+        res.status(500).json({ error: 'Error fetching weather data' });
     }
-})
+});
 
-app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`))
+
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on http://0.0.0.0:${PORT}`);
+});
