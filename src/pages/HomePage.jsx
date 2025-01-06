@@ -18,7 +18,7 @@ export default function HomePage({isPermissionGranted}) {
   useEffect(() => {
     if (isPermissionGranted){
     setIsLoading(true)
-    fetch('https://weatherapp-1-lddj.onrender.com/getData')
+    fetch('https://weatherapp-1-lddj.onrender.com/api/getData')
     .then(resp => resp.json())
     .then(data => {
       setGeolocation(data.geolocation)
