@@ -23,17 +23,6 @@ if (!WEATHERAPI_API_KEY || !GEOAPIFY_API_KEY) {
 // Cache setup (15 mins)
 const cache = new NodeCache({ stdTTL: 900 });
 
-// Path setup for static file serving
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Serve React build files for production
-app.use(express.static(path.join(__dirname, 'dist')));
-
-
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
 
 
 app.get('/api/getData', async (req, res) => {
