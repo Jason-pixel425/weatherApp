@@ -1,6 +1,8 @@
 import { useState, useEffect, createContext } from 'react'
 import CurrentWeather from '../components/CurrentWeather'
 import SearchBar from '../components/Searchbar'
+import { OrbitProgress } from 'react-loading-indicators'
+import '../styles/HomePage.css'
 // IPGEO
 // WeatherAPI
 const WeatherContext = createContext(null);
@@ -12,7 +14,7 @@ export default function HomePage({isPermissionGranted}) {
   const [isLoading, setIsLoading] = useState(true)
   const [hasSearched, setHasSearched] = useState(false)
   
-
+  
   useEffect(() => {
     if (isPermissionGranted){
     setIsLoading(true)
@@ -51,7 +53,11 @@ export default function HomePage({isPermissionGranted}) {
 
   if (!hasSearched && !isPermissionGranted){
     return (
-      <SearchBar handleSearch={handleSearchClick} />
+      <div className="search-container">
+        
+          <SearchBar handleSearch={handleSearchClick} labelText='Search for location' id="Search-location-input"/>
+
+      </div>
     )
   }
 
@@ -59,7 +65,9 @@ export default function HomePage({isPermissionGranted}) {
     <>
           {          
           isLoading ? (
-        <div>Loading...</div>
+        <div className="loading-container">
+          <OrbitProgress />
+        </div>
       ) : (
             <WeatherContext.Provider value={{
               geolocationData : geolocation, 

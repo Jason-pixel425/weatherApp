@@ -5,7 +5,7 @@
     max-width: 1280px;
     padding: 4rem;
     backdrop-filter: blur(3px);
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.5);
     border-radius: 0 50px 50px 50px;
     
 }
@@ -16,10 +16,10 @@ body{
 
 }
 .horizontal-line{
-    height: 3px; /* Line thickness */
-    background-color: #FFF; /* Line color */
-    width: 100%; /* Line width */
-    margin: 1em 0; /* Space around the line */
+    height: 3px; /* thickness */
+    background-color: #FFF; 
+    width: 100%; 
+    margin: 1em 0; /* space  */
 }
 
 .location-time{
@@ -33,7 +33,7 @@ body{
 
 .weather-details-title{
     text-align: center;
-    
+    margin-top: 3em;
     padding: 0;
     font-weight: 500;
 }
@@ -60,7 +60,7 @@ body{
     font-weight: 500;
     align-items: center;
     backdrop-filter: blur(5px);
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0, 0, 0, 0.8);
     /* border-radius: 50px 50px 0px 0px; */
 }
 
