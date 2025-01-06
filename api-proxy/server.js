@@ -2,8 +2,7 @@ import express from 'express';
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
 import NodeCache from 'node-cache';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -14,6 +13,11 @@ const PORT = process.env.PORT || 3001;
 const WEATHERAPI_API_KEY = process.env.WEATHERAPI_API_KEY;
 const GEOAPIFY_API_KEY = process.env.GEOAPIFY_API_KEY;
 
+app.use(cors({
+    origin: 'https://atmosweatherwebapps.netlify.app', // Allows all origins. Replace with specific domains in production.
+    methods: ['GET'],
+    allowedHeaders: ['Content-Type']
+}));
 // Ensure the API keys are defined
 if (!WEATHERAPI_API_KEY || !GEOAPIFY_API_KEY) {
     console.error('API keys are missing in the .env file');
