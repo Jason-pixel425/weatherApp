@@ -11,7 +11,7 @@ export default function SearchBar({handleSearch, id='', labelText=''}) {
         () =>
             _.debounce(async (query) => {
                 try {
-                    const response = await fetch(`/api/search?query=${query}`);
+                    const response = await fetch(`https://weatherapp-1-lddj.onrender.com/api/search?query=${query}`);
                     if (!response.ok) throw new Error('Failed to fetch data');
                     const data = await response.json();
                    

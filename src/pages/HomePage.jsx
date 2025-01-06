@@ -18,7 +18,7 @@ export default function HomePage({isPermissionGranted}) {
   useEffect(() => {
     if (isPermissionGranted){
     setIsLoading(true)
-    fetch('/api/getData')
+    fetch('https://weatherapp-1-lddj.onrender.com/getData')
     .then(resp => resp.json())
     .then(data => {
       setGeolocation(data.geolocation)
@@ -34,7 +34,7 @@ export default function HomePage({isPermissionGranted}) {
     setHasSearched(true)
     setIsLoading(true)
     try {
-      const response = await fetch(`/api/searchweather?lat=${lat}&lon=${lon}`);
+      const response = await fetch(`https://weatherapp-1-lddj.onrender.com/api/searchweather?lat=${lat}&lon=${lon}`);
       if (!response.ok) {
         setIsLoading(false)
         throw new Error('Network response was not ok');
