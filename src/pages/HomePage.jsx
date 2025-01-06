@@ -14,52 +14,42 @@ export default function HomePage({isPermissionGranted}) {
   const [isLoading, setIsLoading] = useState(true)
   const [hasSearched, setHasSearched] = useState(false)
   
-
-
-
+  
   useEffect(() => {
-    const fetchWeatherDataWithGeolocation = async () => {
-        if (isPermissionGranted) {
-            setIsLoading(true);
-            try {
-                // Use Browser's Built-in Geolocation API
-                navigator.geolocation.getCurrentPosition(
-                    async (position) => {
-                        const { latitude, longitude } = position.coords;
+    if (isPermissionGranted) {
+        setIsLoading(true);
+        navigator.geolocation.getCurrentPosition(
+            async (position) => {
+                const { latitude, longitude } = position.coords;
 
-                       
-                        const weatherResponse = await fetch(
-                            `https://weatherapp-1-lddj.onrender.com/api/searchweather?lat=${latitude}&lon=${longitude}`
-                        );
-                        if (!weatherResponse.ok) throw new Error('Failed to fetch weather data');
+                try {
+                    
+                    const response = await fetch(`https://weatherapp-1-lddj.onrender.com/api/searchweather?lat=${latitude}&lon=${longitude}`);
+                    if (!response.ok) throw new Error('Failed to fetch weather data');
 
-                        const weatherData = await weatherResponse.json();
+                    const data = await response.json();
 
-                        
-                        setGeolocation({ lat: latitude, lon: longitude });
-                        setWeatherCurrent({
-                            weatherCur: { ...weatherData.weatherCurrent },
-                            weatherCurrForecast: { ...weatherData.weatherForecast.forecastday[0] }
-                        });
-                        setWeatherForecast(weatherData.weatherForecast.forecastday.slice(1));
-                    },
-                    (error) => {
-                        console.error('Error obtaining geolocation:', error);
-                        alert('Geolocation permission denied or unavailable.');
-                        setIsLoading(false);
-                    }
-                );
-            } catch (error) {
-                console.error('Error during data fetch:', error);
-            } finally {
+                 
+                    setGeolocation(data.geolocation);
+                    setWeatherCurrent({ 
+                        weatherCur: { ...data.weatherCurrent }, 
+                        weatherCurrForecast: { ...data.weatherForecast.forecastday[0] } 
+                    });
+                    setWeatherForecast(data.weatherForecast.forecastday.slice(1));
+                } catch (error) {
+                    console.error('Error during data fetch:', error);
+                } finally {
+                    setIsLoading(false);
+                }
+            },
+            (error) => {
+                console.error('Error obtaining geolocation:', error);
+                alert('Geolocation permission denied or unavailable.');
                 setIsLoading(false);
             }
-        }
-    };
-
-    fetchWeatherDataWithGeolocation();
+        );
+    }
 }, [isPermissionGranted]);
-
 
   async function handleSearchClick (lat, lon) {
     setHasSearched(true)
