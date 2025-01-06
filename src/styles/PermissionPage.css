@@ -1,0 +1,90 @@
+.permission-container {
+    position: relative;
+    max-width: 1039px;
+    margin: auto auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: 60px;
+    padding: 3em;
+    background-color: #111;
+}
+
+/* Pseudo-element to display the animated ring */
+.permission-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    /* Start with a conic gradient */
+    background: conic-gradient(
+        from 0deg,
+        #fff 0%,
+        #f0f 50%,
+        #fff 100%
+    );
+    /* Gradually shift the starting angle for the gradient */
+    animation: colorSweep 3s linear infinite;
+    /* Mask to show just the outer ring (border area) */
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none; 
+    /* The padding thickness here controls how wide the border ring appears */
+    padding: 5px;
+}
+
+@keyframes colorSweep {
+    0% {
+        background: conic-gradient(
+            from 0deg,
+            #fff 0%,
+            #f0f 50%,
+            #fff 100%
+        );
+    }
+    100% {
+        background: conic-gradient(
+            from 360deg,
+            #fff 0%,
+            #f0f 50%,
+            #fff 100%
+        );
+    }
+}
+.permission-container > h1 {
+    margin: 0;
+}
+
+.inner-permission-container {
+    padding: 1em;
+}
+
+.inner-permission-container > h2 {
+    margin: 0.25em 0em;
+    font-weight: 600;
+}
+
+.inline-permission-question{
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    cursor: pointer;
+}
+
+.button-container{
+    display: flex;
+    justify-content: space-between;
+    margin: 0em 10em;
+}
+
+.button-container .btn-decline, .button-container .btn-accept {
+    padding: 1em 2em;
+    font-size: 1.25rem;
+    border-radius: 50px;
+    cursor: pointer;
+}

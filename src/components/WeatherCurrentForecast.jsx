@@ -1,9 +1,8 @@
 import { useEffect } from 'react'
 import styles from '../styles/CurrentWeatherStyles/WeatherForecastDay.module.css'
 import WeatherCard from './WeatherCard'
+
 export default function WeatherCurrentForecast({forecastDay, style={border: '1px solid rgba(255, 255, 255, 0.5)', flexDirection : 'column', borderRadius: '5px', alignItems: 'center', fontWeight: '600'}}) {
-    
-    console.log(`This is the ${forecastDay}`)
     useEffect(() => {
         // Get the current hour in 12 hour
         const now = new Date();

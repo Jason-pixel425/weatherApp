@@ -6,15 +6,16 @@ import WeatherCurrentForecast from './WeatherCurrentForecast'
 import Clock from './Clock'
 import SearchBar from './Searchbar'
 import ForecastWeather from './ForecastWeather'
-import Lightning from '../styles/images/Lightning.jpg';
-import Cloudy from '../styles/images/Cloudy.jpg';
-import Rain from '../styles/images/Rain.jpg';
-import Night from '../styles/images/night.jpg';
-import SunnyDay from '../styles/images/sunnyDay.jpg';
-import partlyCloudy from '../styles/images/partlycloudy.jpg'
+// import Lightning from '../styles/images/Lightning.jpg';
+// import Cloudy from '../styles/images/Cloudy.jpg';
+// import Rain from '../styles/images/Rain.jpg';
+// import Night from '../styles/images/night.jpg';
+// import SunnyDay from '../styles/images/sunnyDay.jpg';
+// import partlyCloudy from '../styles/images/partlycloudy.jpg'
 
 export default function CurrentWeather({}) {
-    const [backgroundImg, setBackgroundImg] = useState(null)
+    const [backgroundGradient, setBackgroundGradient] = useState(null)
+    const [hasSearched, setHasSearched] = useState(false)
     const { weatherCurrentData, geolocationData, weatherForecastData, handleSearch } = useContext(WeatherContext)
     const weatherDataCurrent = weatherCurrentData.weatherCur
     const weatherDataDay = weatherCurrentData.weatherCurrForecast
@@ -23,38 +24,31 @@ export default function CurrentWeather({}) {
         if (!weatherCurrentData?.weatherCur) return;
 
         const weatherConditionString = weatherCurrentData.weatherCur.condition.text.toLowerCase();
-        console.log('Weather condition string:', weatherConditionString);
-
-        let newBackgroundImg;
+      
+        let newGradient;
 
         if (weatherConditionString.includes('thunder')) {
-            newBackgroundImg = Lightning;
+            newGradient = 'linear-gradient(to left, #232526, #414345)'; // Dark stormy colors
         } else if (weatherConditionString.includes('partly cloudy')) {
-            newBackgroundImg = partlyCloudy;
+            newGradient = 'linear-gradient(to right, #e6dada, #274046)'; // Cloudy grey
         } else if (weatherConditionString.includes('cloudy') || weatherConditionString.includes('overcast')) {
-            newBackgroundImg = Cloudy;
+            newGradient = 'linear-gradient(to right, #606c88, #3f4c6b);';
         } else if (weatherConditionString.includes('rain')) {
-            newBackgroundImg = Rain;
+            newGradient = 'linear-gradient(135deg, #00c6fb 0%, #005bea 100%)'; // Rainy blues
         } else if (weatherConditionString.includes('clear')) {
-            newBackgroundImg = Night;
+            newGradient = 'linear-gradient(to left, #616161, #9bc5c3)'; 
         } else {
-            newBackgroundImg = SunnyDay;
+            newGradient = 'linear-gradient(to right, #f0c27b, #4b1248)'; // Default sunny colors
         }
 
-        console.log('Setting new background image:', newBackgroundImg);
-        setBackgroundImg(newBackgroundImg);
+        setBackgroundGradient(newGradient);
     }, [weatherCurrentData]);
 
     useEffect(() => {
-        if (backgroundImg) {
-            document.body.style.backgroundImage = `url(${backgroundImg})`;
-            console.log('Background image applied:', backgroundImg);
+        if (backgroundGradient) {
+            document.body.style.background = backgroundGradient;
         }
-    }, [backgroundImg]);
-
-
-        
-
+    }, [backgroundGradient]);
     return (
         <>
             <div className={styles["inline"]}>
@@ -70,12 +64,7 @@ export default function CurrentWeather({}) {
         <section className={styles["current-weather-container"]}>
             <WeatherCurrentForecast forecastDay={weatherDataDay} />
 
-            
-                    <SearchBar handleSearch={handleSearch} />
-
-                           
-                  
-           
+            <SearchBar handleSearch={handleSearch} labelText='Search for location' id="Search-location-input"/>
 
             <div>
                 <h3 className={styles['weather-details-title']}>Weather Details...</h3>

@@ -3,7 +3,7 @@ import { FaSearch } from 'react-icons/fa';
 import styles from '../styles/SearchBarStyles/SearchBar.module.css';
 import _ from 'lodash';
 
-export default function SearchBar({handleSearch}) {
+export default function SearchBar({handleSearch, id='', labelText=''}) {
     const [input, setInput] = useState("");
     const [searchData, setSearchData] = useState([])
     // Use useMemo to create a persistent debounce
@@ -14,7 +14,7 @@ export default function SearchBar({handleSearch}) {
                     const response = await fetch(`/api/search?query=${query}`);
                     if (!response.ok) throw new Error('Failed to fetch data');
                     const data = await response.json();
-                    console.log(data)
+                   
                     setSearchData(data)
                 } catch (error) {
                     console.error('Error fetching search results:', error);
@@ -39,12 +39,14 @@ export default function SearchBar({handleSearch}) {
 
     return (
         <section className={styles["search_section"]}>
+            <label className={styles["label-search"]} for={id}>{labelText}</label>
             <div className={styles["search_input_div"]}>
-                <input className={styles["search_input"]} placeholder="Type to search..." value={input} onChange={(e) => handleChange(e.target.value)} />
+                
+                <input id={id} className={styles["search_input"]} placeholder="Type to search..." value={input} onChange={(e) => handleChange(e.target.value)} />
             
-                <div className={styles['search_icon']}>
+                {/* <div className={styles['search_icon']}>
                     <FaSearch  />
-                </div>
+                </div> */}
             </div>
             <div className={styles['search_result']}>
                 {

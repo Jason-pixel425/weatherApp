@@ -6,9 +6,11 @@ export default function PermissionCheck({children, className, toggle, ...rest}){
         <>
         <section className={classes} {...rest}>
             {children}
-            <button className="btn-decline" onClick={() => toggle(false)}>Decline</button>
-            <button className="btn-accept" onClick={() => toggle(true)}>Accept</button>
+            <div className="button-container">
+                <button className="btn-decline" onClick={() => toggle(false)}>Decline</button>
+                <button className="btn-accept" onClick={() => toggle(true)}>Accept</button>
+            </div>
         </section>
         </>
     )
-}
+}5
