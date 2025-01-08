@@ -1,50 +1,38 @@
-# React + TypeScript + Vite
+# Atmos - WeatherApp
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a weather web application learning project I took on.
 
-Currently, two official plugins are available:
+**Deployed here:** https://atmosweatherwebapps.netlify.app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Please Note:** Due to the how to free server (Render) operates, first viewing of the site may cause loading to take longer than usual.
 
-## Expanding the ESLint configuration
+## What I learned
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+To start with, In terms of incorperating new things, think I may have bitten off more than I can chew. Despite this, in the end, I'm happy with what I've ended up with.
 
-- Configure the top-level `parserOptions` property like this:
+I learnt enough Node.js to get by. Seeing as I have never used it before it's probably not great but it helped my understanding of the relationship between a backend and frontend.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+This project was initiated as TypeScript, a language I had not used before. I eventually removed it because it caused issues when deploying. 
+Furthermore, going into TypeScript blind on top of this being the first project developed with no figma file or external requirements was a little too much.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+I solidified and furthered my understanding of React, JavaScript, CSS and HTML.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+As a final note, React Router in this project might have been overkill. It was added as I was initially getting location by IP. This did not ask the user permission before getting their location and therefore I created a protected route using React Router to prompt the user for permission. This method caused more issues than it solved so I removed it and used navigator instead. The switch happened very late in the project and React Router wasn't hindering the project so therefore, I left its implementation as is.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Technologies used
+  - React
+  - JavaScript
+  - HTML
+  - CSS
+  - Node.js
+  - React Router
+
+## Things left to be done
+- Need to add a 404 page
+- Add user feedback when fetch requests fails
+
+## Things I can improve upon
+- Pre-planning. Specifically design choices, technologies and scoping of the project
+- Comments in code explaining what the code is doing.
+- Commiting more often and with more detailed descriptions.
+- File cleanup - Some unused assets and commented out code still left in project.
