@@ -12,6 +12,8 @@ To start with, In terms of incorperating new things, think I may have bitten off
 
 I learnt enough Node.js to get by. Seeing as I have never used it before it's probably not great but it helped my understanding of the relationship between a backend and frontend.
 
+I also learnt how to implement debouncing. This came up in the project when implementing the search bar autocomplete feature. The application is using the free plan of the geoapi. Therefore, I only had 3000 calls to the api per day. With a call happening every keystroke, this would quickly add up. I installed lodash and used its debounce to wait 300 seconds after the user's last keystroke to then make a call to the geoapi.
+
 This project was initiated as TypeScript, a language I had not used before. I eventually removed it because it caused issues when deploying. 
 Furthermore, going into TypeScript blind on top of this being the first project developed with no figma file or external requirements was a little too much.
 
@@ -36,3 +38,4 @@ As a final note, React Router in this project might have been overkill. It was a
 - Comments in code explaining what the code is doing.
 - Commiting more often and with more detailed descriptions.
 - File cleanup - Some unused assets and commented out code still left in project.
+- Making components a bit more reusable.
